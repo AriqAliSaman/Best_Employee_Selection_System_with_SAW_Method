@@ -150,7 +150,7 @@ $htmlTable =
     </thead>
     <tbody>';
 $no = 1;
-foreach ($db->select('sub_kriteria.id_subkriteria,sub_kriteria.subkriteria,kriteria.kriteria,sub_kriteria.nilai','sub_kriteria,kriteria')->where('sub_kriteria.id_kriteria=kriteria.id_kriteria')->order_by('sub_kriteria.id_kriteria', 'DESC')->get() as $data) :
+foreach ($db->select('sub_kriteria.id_subkriteria,sub_kriteria.subkriteria,kriteria.kriteria,sub_kriteria.nilai', 'sub_kriteria,kriteria')->where('sub_kriteria.id_kriteria=kriteria.id_kriteria')->order_by('sub_kriteria.id_subkriteria', 'ASC')->get() as $data) :
     // foreach ('SELECT ' );
     $htmlTable .= '<tr>
             <td>' . $no . '</td>
