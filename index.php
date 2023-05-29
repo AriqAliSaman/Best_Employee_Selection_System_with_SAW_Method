@@ -194,7 +194,7 @@ if (empty($_SESSION['id'])) {
                                             <div class="d-flex no-block al m-r-15ign-items-center">
                                                 <i class="icon-people fa-2x mr-3" title="Karyawan"></i>
                                                 <div class="m-t-1">
-                                                    <h5 class="text-white font-medium">Total Karyawan</h5>
+                                                    <h5 class="text-white font-medium">Total Karyawan 11</h5>
                                                     <h6 class="text-white"><?php echo $db->totalkaryawan() ?></h6>
                                                 </div>
                                             </div>
