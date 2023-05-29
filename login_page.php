@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/logo_mnm.png">
-    <title>Sistem Penunjang Keputusan Karyawan Terbaik PT. Mahakarya Nuansa Mandiri | Login</title>
+    <title>Sistem Penunjang Keputusan Karyawan Terbaik PT Mahakarya Nuansa Mandiri | Login</title>
 
     <!-- page css -->
     <link href="dist/css/pages/login-register-lock.css" rel="stylesheet">
