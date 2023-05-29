@@ -237,11 +237,11 @@ if (empty($_SESSION['id'])) {
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
     <!-- end - This is for export functionality only -->
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $(function() {
             $("#tambah_admin").addClass('active');
         });
-    </script>
+    </script> -->
     <script>
         // Alert Berhasil Tambah Data
         let success_create_param = "<?= $_GET['success_create']; ?>";
