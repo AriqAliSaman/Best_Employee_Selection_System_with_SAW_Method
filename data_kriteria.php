@@ -225,7 +225,6 @@ if (empty($_SESSION['id'])) {
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
     <!-- end - This is for export functionality only -->
     <script>
-
         // Alert Berhasil Tambah Data
         let success_create_param = "<?= $_GET['success_create']; ?>";
         if (success_create_param == '1') {
@@ -246,7 +245,7 @@ if (empty($_SESSION['id'])) {
             });
         }
         // Alert Berhasil Tambah Data
-        
+
         // Alert Berhasil Ubah Data
         let success_edit_param = "<?= $_GET['success_edit']; ?>";
         if (success_edit_param == '1') {
@@ -267,76 +266,29 @@ if (empty($_SESSION['id'])) {
             });
         }
         // Alert Berhasil Ubah Data
-        
-        // ! Style 1 SweetAlert
-        // let success_delete_param = "<?= $_GET['success_delete']; ?>";
-        // if (success_delete_param == '1') {
-        //     Swal.fire(
-        //         'Berhasil',
-        //         'Data berhasil dihapus',
-        //         'success'
-        //     ).then((result) => {
-        //         window.history.replaceState(null, '', window.location.pathname);
-        //     });
-        // } else if (success_delete_param == '0') {
-        //     Swal.fire(
-        //         'Gagal',
-        //         'Data gagal dihapus',
-        //         'error'
-        //     ).then((result) => {
-        //         window.history.replaceState(null, '', window.location.pathname);
-        //     });
-        // }
 
-        // //Confirm Message
-        // $("table tbody").on('click', '.hapus', function(e) {
-        //     let id = $(this).data("id");
-        //     Swal.fire({
-        //         title: 'Hapus data ini?',
-        //         type: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: "#00C295",
-        //         confirmButtonText: "Hapus",
-        //         closeOnConfirm: false,
-        //         cancelButtonColor: "#DD6B55",
-        //         cancelButtonText: "Batal"
-        //     }).then((result) => {
-        //         if (result.value) {
-        //             window.location.href = "delete_karyawan.php?id=" + id;
-        //             // $.ajax({
-        //             //     url: "delete_admin.php",
-        //             //     type: 'DELETE',
-        //             //     data: {
-        //             //         "id": id
-        //             //     },
-        //             //     success: function(response) {
-        //             //         console.log(response);
-        //             //         if (response.status == 'success') {
-        //             //             Swal.fire(
-        //             //                 'Berhasil!',
-        //             //                 'Data berhasil dihapus',
-        //             //                 'success'
-        //             //             ).then((result) => {
-        //             //                 location.href = "delete_admin.php",
-        //             //                     location.reload();
-        //             //             })
-        //             //         } else {
-        //             //             Swal.fire(
-        //             //                 'Gagal!',
-        //             //                 'Data gagal dihapus',
-        //             //                 'error'
-        //             //             ).then((result) => {
-        //             //                 location.reload();
-        //             //             })
-        //             //         }
-        //             //     }
-        //             // });
-        //         }
-        //     })
-        // });
-        // ! Style 1 SweetAlert
+        // Alert Berhasil Hapus Data
+        let success_delete_param = "<?= $_GET['success_delete']; ?>";
+        if (success_delete_param == '1') {
+            Swal.fire(
+                'Berhasil!',
+                'Data berhasil dihapus',
+                'success'
+            ).then((result) => {
+                window.history.replaceState(null, '', window.location.pathname);
+            });
+        } else if (success_delete_param == '0') {
+            Swal.fire(
+                'Gagal!',
+                'Data gagal dihapus',
+                'error'
+            ).then((result) => {
+                window.history.replaceState(null, '', window.location.pathname);
+            });
+        }
+        // Alert Berhasil Hapus Data
 
-        // ! Style 2 SweetAlert
+        //! Alert Confirm
         ! function($) {
 
             var SweetAlert = function() {};
@@ -356,13 +308,7 @@ if (empty($_SESSION['id'])) {
                         cancelButtonText: "Batal"
                     }).then((result) => {
                         if (result.value) {
-                            Swal.fire(
-                                'Berhasil!',
-                                'Data berhasil dihapus',
-                                'success'
-                            ).then((result) => {
-                                location.href = 'delete_kriteria.php?id= ' + id;
-                            })
+                            location.href = 'delete_kriteria.php?id= ' + id;
                         }
                     })
                 });
@@ -375,7 +321,7 @@ if (empty($_SESSION['id'])) {
             "use strict";
             $.SweetAlert.init()
         }(window.jQuery);
-        // ! Style 2 SweetAlert
+        //! Alert Confirm
 
         // <!-- ======================================================= -->
         $(function() {
@@ -425,21 +371,6 @@ if (empty($_SESSION['id'])) {
                 ]
             });
             $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel').addClass('btn btn-primary mr-1');
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $("#AD").addClass('menu-top-active');
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $('#example1').dataTable();
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $("#ds").addClass('menu-top-active');
         });
     </script>
     <script type="text/javascript">

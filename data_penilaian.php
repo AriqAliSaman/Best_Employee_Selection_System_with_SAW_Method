@@ -238,6 +238,28 @@ if (empty($_SESSION['id'])) {
         }
         // Alert Berhasil Ubah Data
 
+        // Alert Berhasil Hapus Data
+        let success_delete_param = "<?= $_GET['success_delete']; ?>";
+        if (success_delete_param == '1') {
+            Swal.fire(
+                'Berhasil!',
+                'Data berhasil dihapus',
+                'success'
+            ).then((result) => {
+                window.history.replaceState(null, '', window.location.pathname);
+            });
+        } else if (success_delete_param == '0') {
+            Swal.fire(
+                'Gagal!',
+                'Data gagal dihapus',
+                'error'
+            ).then((result) => {
+                window.history.replaceState(null, '', window.location.pathname);
+            });
+        }
+        // Alert Berhasil Hapus Data
+
+        //! Alert Confirm
         ! function($) {
 
             var SweetAlert = function() {};
@@ -257,13 +279,7 @@ if (empty($_SESSION['id'])) {
                         cancelButtonText: "Batal"
                     }).then((result) => {
                         if (result.value) {
-                            Swal.fire(
-                                'Berhasil!',
-                                'Data berhasil dihapus',
-                                'success'
-                            ).then((result) => {
-                                location.href = 'delete_penilaian.php?id= ' + id;
-                            })
+                            location.href = 'delete_penilaian.php?id= ' + id;
                         }
                     })
                 });
@@ -276,6 +292,8 @@ if (empty($_SESSION['id'])) {
             "use strict";
             $.SweetAlert.init()
         }(window.jQuery);
+        //! Alert Confirm
+
         // <!-- ======================================================= -->
         $(function() {
             $('#myTable').DataTable();
@@ -324,11 +342,6 @@ if (empty($_SESSION['id'])) {
                 ]
             });
             $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel').addClass('btn btn-primary mr-1');
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $("#tpa").addClass('menu-top-active');
         });
     </script>
     <script type="text/javascript">
