@@ -301,7 +301,7 @@ if (empty($_SESSION['id'])) {
     </script>
     <script type="text/javascript">
         $(function() {
-            $("#sidebarnav >li >ul.collapse").addClass('active');
+            $("#sidebarnav >li >a.has-arrow").addClass('active');
         });
     </script>
     <script>
