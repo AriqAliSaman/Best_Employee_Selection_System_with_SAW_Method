@@ -43,7 +43,7 @@
                     <i class="icon-pie-chart"></i><span class="hide-menu">Proses SPK</span>
                 </a>
             </li>
-            <li> <a class="has-arrow2 waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+            <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                     <i class="icon-chart"></i><span class="hide-menu">Laporan</span>
                 </a>
                 <ul aria-expanded="false" class="collapse">
