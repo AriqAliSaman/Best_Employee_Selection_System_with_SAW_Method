@@ -137,22 +137,22 @@ $htmlTable =
 <table border="1" cellpadding="4" >
 <thead>
         <tr>
-            <th>No</th>
+            <th style="width:35px">No</th>
             <th>Nama</th>
-            <th>Alamat</th>
+            <th style="width:25%">Alamat</th>
             <th>Telepon</th>
-            <th>Email</th>
+            <th style="width:28%">Email</th>
         </tr>
     </thead>
     <tbody>';
         $no=1; 
         foreach($db->select('*','admin')->get() as $data):
     $htmlTable .='<tr>
-            <td>'.$no.'</td>
+            <td style="width:35px">'.$no.'</td>
             <td>'.$data['nama'].'</td>
-            <td>'.$data['alamat'].'</td>
+            <td style="width:25%">'.$data['alamat'].'</td>
             <td>'.$data['telepon'].'</td>
-            <td>'.$data['email'].'</td>
+            <td style="width:28%">'.$data['email'].'</td>
         </tr>';
         $no++; endforeach;
         $htmlTable .= '</tbody>
