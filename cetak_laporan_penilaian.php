@@ -85,7 +85,7 @@
              if($this->isLastPage) { 
                 $tgl = date("d F Y");
                 // $this->SetY(-55);
-                $html = '<font size="10">Jambi, '.$tgl.' <br/><br/> <br/><br/>
+                $html = '<font size="10">Jakarta, '.$tgl.' <br/><br/> <br/><br/>
                 '.$_SESSION['nama'].'<font>
                 <br/>';
                 $this->writeHTMLCell(
