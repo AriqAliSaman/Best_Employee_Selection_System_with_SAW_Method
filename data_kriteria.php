@@ -114,6 +114,7 @@ if (empty($_SESSION['id'])) {
                                                 <th class="text-center">No</th>
                                                 <th>Kriteria</th>
                                                 <th>Bobot</th>
+                                                <th>Tipe</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -124,6 +125,7 @@ if (empty($_SESSION['id'])) {
                                                     <td class="text-center"><?= $no; ?></td>
                                                     <td><?= $data['kriteria'] ?></td>
                                                     <td><?= $data['bobot'] ?></td>
+                                                    <td><?= $data['type'] ?></td>
                                                     <td class="text-center" style="width: 150px;">
                                                         <a class="btn btn-warning" href="edit_kriteria.php?id=<?php echo $data[0] ?>">Ubah</a>
                                                         <button class="btn btn-danger text-white hapus" data-id="<?php echo $data[0] ?>">Hapus</button>
