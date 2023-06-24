@@ -22,7 +22,7 @@ if (empty($_SESSION['id'])) {
     <title>Tambah Data Penilaian Karyawan</title>
     <!-- This page CSS -->
     <!-- Custom CSS -->
-    <link href="dist/css/all-style.css" rel="stylesheet">
+    <link href="dist/css/fix-style.css" rel="stylesheet">
     <!-- This page CSS -->
     <link rel="stylesheet" type="text/css" href="assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link href="assets/node_modules/morrisjs/morris.css" rel="stylesheet">
@@ -103,6 +103,17 @@ if (empty($_SESSION['id'])) {
                                             <?= $_GET['error_msg']; ?>
                                         </div>
                                     <?php endif ?>
+                                    <div class="row col-md-12">
+                                        <div class="form-group col-md-6">
+                                            <label for="nama">Periode Awal</label>
+                                            <input id="periode_awal" type="date" class="form-control" name="periode_awal" placeholder="Periode Awal" />
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="nama">Periode Akhir</label>
+                                            <input id="periode_akhir" type="date" class="form-control" name="periode_akhir" placeholder="Periode Akhir" />
+                                        </div>
+                                    </div>
+
                                     <div class="form-group col-md-12">
                                         <div class="alert alert-info">
                                             <i class="ti-info-alt"></i> Nama Yang Ditampilkan adalah nama karyawan yang belum dinilai...
@@ -140,56 +151,7 @@ if (empty($_SESSION['id'])) {
                 <!-- ============================================================== -->
                 <!-- .right-sidebar -->
                 <div class="right-sidebar">
-                    <div class="slimscrollright">
-                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span>
-                        </div>
-                        <div class="r-panel-body">
-                            <ul id="themecolors" class="m-t-20">
-                                <li><b>With Light sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-default" class="default-theme working">1</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-green" class="green-theme">2</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-red" class="red-theme">3</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-blue" class="blue-theme">4</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-purple" class="purple-theme">5</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-megna" class="megna-theme">6</a></li>
-                                <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-default-dark" class="default-dark-theme ">7</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-green-dark" class="green-dark-theme">8</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-red-dark" class="red-dark-theme">9</a>
-                                </li>
-                                <li><a href="javascript:void(0)" data-skin="skin-blue-dark" class="blue-dark-theme">10</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-purple-dark" class="purple-dark-theme">11</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-megna-dark" class="megna-dark-theme ">12</a></li>
-                            </ul>
-                            <ul class="m-t-20 chatonline">
-                                <li><b>Chat option</b></li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <?php include 'layouts/custom_style.php' ?>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Right sidebar -->
@@ -246,6 +208,9 @@ if (empty($_SESSION['id'])) {
     <script src="dist/js/jquery.webticker.min.js"></script>
     <script src="dist/js/fastclick.js"></script>
     <script src="dist/js/web-ticker.js"></script>
+    <!-- DateRangePicker -->
+    <!-- <link href="assets/daterangepicker/daterangepicker-bs3.css" rel="stylesheet"></link>
+    <script src="assets/daterangepicker/daterangepicker.js"></script> -->
     <script type="text/javascript">
         $(function() {
             $('#cc-table').DataTable({
@@ -257,9 +222,38 @@ if (empty($_SESSION['id'])) {
             $("#task3").perfectScrollbar();
         });
     </script>
+    <!-- <script>
+        var startDate;
+        var endDate;
+        $(document).ready(function() {
+            $('#periode').daterangepicker({
+                    showDropdowns: true,
+                    startDate: moment(),
+                    endDate: moment(),
+                },
+                function(start, end) {
+                    console.log("Callback has been called!");
+                    $('#periode').html(start.format('DD MMMM YYYY') + ' - ' + end.format(
+                        'DD MMMM YYYY'));
+                    startDate = start;
+                    endDate = end;
+
+                }
+            );
+            $('#periode').html(moment().format('DD MMMM YYYY') + ' - ' + moment()
+                .format('DD MMMM YYYY'));
+
+            $('#saveBtn').click(function() {
+                //console.log(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format('DD MMMM YYYY'));
+                $('#tampil').html(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format(
+                    'DD MMMM YYYY'));
+            });
+
+        });
+    </script> -->
     <script type="text/javascript">
         $(function() {
-            $("#pk").addClass('menu-top-active');
+            $("#sidebarnav >li >a.pk").addClass('active');
         });
     </script>
 </body>
