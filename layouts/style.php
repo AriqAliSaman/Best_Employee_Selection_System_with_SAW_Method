@@ -1,5 +1,5 @@
 <link rel="icon" type="image/png" sizes="16x16" href="assets/images/logo_mnm.png">
-<link href="dist/css/all-style.css" rel="stylesheet">
+<link href="dist/css/fix-style.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
 <link href="assets/node_modules/morrisjs/morris.css" rel="stylesheet">
 <link href="assets/node_modules/c3-master/c3.min.css" rel="stylesheet">

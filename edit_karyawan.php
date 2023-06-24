@@ -22,7 +22,7 @@ if (empty($_SESSION['id'])) {
     <title>Ubah Data Karyawan</title>
     <!-- This page CSS -->
     <!-- Custom CSS -->
-    <link href="dist/css/all-style.css" rel="stylesheet">
+    <link href="dist/css/fix-style.css" rel="stylesheet">
     <!-- This page CSS -->
     <link rel="stylesheet" type="text/css" href="assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link href="assets/node_modules/morrisjs/morris.css" rel="stylesheet">
@@ -104,134 +104,150 @@ if (empty($_SESSION['id'])) {
                                             <?= $_GET['error_msg']; ?>
                                         </div>
                                     <?php endif ?>
-                                    <?php foreach ($db->select('*','karyawan')->where('id_calon_kr='.$_GET['id'])->get() as $val): ?>
-                                    <input type="hidden" name="id_calon_kr" value="<?= $val['id_calon_kr']?>">
-                                    <div class="form-group">
-                                        <label>NIK</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon11"><i class="ti-id-badge"></i></span>
-                                            </div>
-                                            <div class="controls">
-                                                <input type="text" name="nik" maxlength="16" class="form-control" style="width: 24.2cm;" value="<?= $val['NIK']?>" required data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="Tidak boleh huruf, hanya boleh angka!" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Nama Karyawan</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon22"><i class="ti-user"></i></span>
-                                            </div>
-                                            <input type="text" class="form-control" id="nama" name="nama" value="<?= $val['nama']?>" aria-label="Nama Karyawan" aria-describedby="basic-addon22"></input>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Jenis Kelamin</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon33"><i class="ti-star"></i></span>
-                                            </div>
-                                            <select required class="form-control" ID="jeniskelamin" name="jeniskelamin">
-                                                <option value="">-Pilih-</option>
-                                                <option  <?php if( $val['jeniskelamin']=='Pria'){echo "selected"; } ?>  value="Pria">Pria</option>
-                                                <option <?php if( $val['jeniskelamin']=='Wanita'){echo "selected"; } ?> value="Wanita">Wanita</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Alamat</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon44"><i class="ti-location-pin"></i></span>
-                                            </div>
-                                            <textarea type="text" class="form-control" id="alamat" name="alamat" aria-label="Alamat" aria-describedby="basic-addon44"><?= $val['alamat']?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Telepon</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon55"><i class="ti-mobile"></i></span>
-                                            </div>
-                                            <div class="controls">
-                                                <input type="text" name="telepon" maxlength="13" class="form-control" style="width: 24.2cm;" value="<?= $val['telepon']?>" required data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="Tidak boleh huruf, hanya boleh angka!">
+                                    <?php foreach ($db->select('*', 'karyawan')->where('id_calon_kr=' . $_GET['id'])->get() as $val) : ?>
+                                        <input type="hidden" name="id_calon_kr" value="<?= $val['id_calon_kr'] ?>">
+                                        <div class="form-group">
+                                            <label>NIK</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon11"><i class="ti-id-badge"></i></span>
+                                                </div>
+                                                <div class="controls">
+                                                    <input type="text" name="nik" maxlength="16" class="form-control" style="width: 24.2cm;" value="<?= $val['NIK'] ?>" required data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="Tidak boleh huruf, hanya boleh angka!" readonly>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tanggal Lahir</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon66"><i class="ti-calendar"></i></span>
+                                        <div class="form-group">
+                                            <label>Nama Karyawan</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon22"><i class="ti-user"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="nama" name="nama" value="<?= $val['nama'] ?>" aria-label="Nama Karyawan" aria-describedby="basic-addon22"></input>
                                             </div>
-                                            <input type="date" class="form-control" id="ttl" name="ttl" value="<?= $val['ttl']?>" aria-label="Tanggal Lahir" aria-describedby="basic-addon66"></input>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tempat Lahir</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon77"><i class="ti-location-pin"></i></span>
+                                        <div class="form-group">
+                                            <label>Jenis Kelamin</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon33"><i class="ti-star"></i></span>
+                                                </div>
+                                                <select required class="form-control" ID="jeniskelamin" name="jeniskelamin">
+                                                    <option value="">-Pilih-</option>
+                                                    <option <?php if ($val['jeniskelamin'] == 'Pria') {
+                                                                echo "selected";
+                                                            } ?> value="Pria">Pria</option>
+                                                    <option <?php if ($val['jeniskelamin'] == 'Wanita') {
+                                                                echo "selected";
+                                                            } ?> value="Wanita">Wanita</option>
+                                                </select>
                                             </div>
-                                            <input type="text" class="form-control" id="tempatlahir" name="tempatlahir" value="<?= $val['TempatLahir']?>" aria-label="Tempat Lahir" aria-describedby="basic-addon77"></input>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Pendidikan</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon99"><i class="ti-medall-alt"></i></span>
+                                        <div class="form-group">
+                                            <label>Alamat</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon44"><i class="ti-location-pin"></i></span>
+                                                </div>
+                                                <textarea type="text" class="form-control" id="alamat" name="alamat" aria-label="Alamat" aria-describedby="basic-addon44"><?= $val['alamat'] ?></textarea>
                                             </div>
-                                            <select required class="form-control" ID="pendidikan" name="pendidikan">
-                                                <option value="">-Pilih-</option>
-                                                <option <?php if( $val['PendidikanTerakhir']=='SD'){echo "selected"; } ?> value="SD">SD</option>
-                                                <option <?php if( $val['PendidikanTerakhir']=='SMA'){echo "selected"; } ?> value="SMA">SMA</option>
-                                                <option <?php if( $val['PendidikanTerakhir']=='D3'){echo "selected"; } ?> value="D3">D3</option>
-                                                <option <?php if( $val['PendidikanTerakhir']=='S1'){echo "selected"; } ?> value="S1">S1</option>
-                                                <option <?php if( $val['PendidikanTerakhir']=='S2'){echo "selected"; } ?> value="S2">S2</option>
-                                                <option <?php if( $val['PendidikanTerakhir']=='S3'){echo "selected"; } ?> value="S3">S3</option>
-                                            </select>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Jabatan</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon99"><i class="ti-medall"></i></span>
+                                        <div class="form-group">
+                                            <label>Telepon</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon55"><i class="ti-mobile"></i></span>
+                                                </div>
+                                                <div class="controls">
+                                                    <input type="text" name="telepon" maxlength="13" class="form-control" style="width: 24.2cm;" value="<?= $val['telepon'] ?>" required data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="Tidak boleh huruf, hanya boleh angka!">
+                                                </div>
                                             </div>
-                                            <input type="text" class="form-control" id="jabatan" name="jabatan" value="<?= $val['Jabatan']?>" aria-label="Jabatan" aria-describedby="basic-addon99"></input>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tanggal Bergabung</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon99"><i class="ti-calendar"></i></span>
+                                        <div class="form-group">
+                                            <label>Tanggal Lahir</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon66"><i class="ti-calendar"></i></span>
+                                                </div>
+                                                <input type="date" class="form-control" id="ttl" name="ttl" value="<?= $val['ttl'] ?>" aria-label="Tanggal Lahir" aria-describedby="basic-addon66"></input>
                                             </div>
-                                            <input type="date" class="form-control" id="ttb" name="ttb" value="<?= $val['TglBergabung']?>" aria-label="Tanggal Bergabung" aria-describedby="basic-addon99"></input>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Keahlian</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon99"><i class="ti-cup"></i></span>
+                                        <div class="form-group">
+                                            <label>Tempat Lahir</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon77"><i class="ti-location-pin"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="tempatlahir" name="tempatlahir" value="<?= $val['TempatLahir'] ?>" aria-label="Tempat Lahir" aria-describedby="basic-addon77"></input>
                                             </div>
-                                            <input type="text" class="form-control" id="skill" name="skill" value="<?= $val['skill'] ?>" aria-label="Keahlian" aria-describedby="basic-addon99"></input>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Pengalaman</label>
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon99"><i class="ti-briefcase"></i></span>
+                                        <div class="form-group">
+                                            <label>Pendidikan</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon99"><i class="ti-medall-alt"></i></span>
+                                                </div>
+                                                <select required class="form-control" ID="pendidikan" name="pendidikan">
+                                                    <option value="">-Pilih-</option>
+                                                    <option <?php if ($val['PendidikanTerakhir'] == 'SD') {
+                                                                echo "selected";
+                                                            } ?> value="SD">SD</option>
+                                                    <option <?php if ($val['PendidikanTerakhir'] == 'SMA') {
+                                                                echo "selected";
+                                                            } ?> value="SMA">SMA</option>
+                                                    <option <?php if ($val['PendidikanTerakhir'] == 'D3') {
+                                                                echo "selected";
+                                                            } ?> value="D3">D3</option>
+                                                    <option <?php if ($val['PendidikanTerakhir'] == 'S1') {
+                                                                echo "selected";
+                                                            } ?> value="S1">S1</option>
+                                                    <option <?php if ($val['PendidikanTerakhir'] == 'S2') {
+                                                                echo "selected";
+                                                            } ?> value="S2">S2</option>
+                                                    <option <?php if ($val['PendidikanTerakhir'] == 'S3') {
+                                                                echo "selected";
+                                                            } ?> value="S3">S3</option>
+                                                </select>
                                             </div>
-                                            <input type="text" class="form-control" id="pengalaman" name="pengalaman" <?= $val['pengalaman']?> aria-label="Keahlian" aria-describedby="basic-addon99"></input>
                                         </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-success mr-2">Submit</button>
-                                    <a href="data_karyawan.php" class="btn btn-danger">Cancel</a>
+                                        <div class="form-group">
+                                            <label>Jabatan</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon99"><i class="ti-medall"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="jabatan" name="jabatan" value="<?= $val['Jabatan'] ?>" aria-label="Jabatan" aria-describedby="basic-addon99"></input>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tanggal Bergabung</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon99"><i class="ti-calendar"></i></span>
+                                                </div>
+                                                <input type="date" class="form-control" id="ttb" name="ttb" value="<?= $val['TglBergabung'] ?>" aria-label="Tanggal Bergabung" aria-describedby="basic-addon99"></input>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Keahlian</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon99"><i class="ti-cup"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="skill" name="skill" value="<?= $val['skill'] ?>" aria-label="Keahlian" aria-describedby="basic-addon99"></input>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Pengalaman</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon99"><i class="ti-briefcase"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control" id="pengalaman" name="pengalaman" <?= $val['pengalaman'] ?> aria-label="Keahlian" aria-describedby="basic-addon99"></input>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-success mr-2">Submit</button>
+                                        <a href="data_karyawan.php" class="btn btn-danger">Cancel</a>
                                     <?php endforeach ?>
                                 </form>
                             </div>
@@ -243,56 +259,7 @@ if (empty($_SESSION['id'])) {
                 <!-- ============================================================== -->
                 <!-- .right-sidebar -->
                 <div class="right-sidebar">
-                    <div class="slimscrollright">
-                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span>
-                        </div>
-                        <div class="r-panel-body">
-                            <ul id="themecolors" class="m-t-20">
-                                <li><b>With Light sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-default" class="default-theme working">1</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-green" class="green-theme">2</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-red" class="red-theme">3</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-blue" class="blue-theme">4</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-purple" class="purple-theme">5</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-megna" class="megna-theme">6</a></li>
-                                <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-default-dark" class="default-dark-theme ">7</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-green-dark" class="green-dark-theme">8</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-red-dark" class="red-dark-theme">9</a>
-                                </li>
-                                <li><a href="javascript:void(0)" data-skin="skin-blue-dark" class="blue-dark-theme">10</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-purple-dark" class="purple-dark-theme">11</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-megna-dark" class="megna-dark-theme ">12</a></li>
-                            </ul>
-                            <ul class="m-t-20 chatonline">
-                                <li><b>Chat option</b></li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <?php include 'layouts/custom_style.php' ?>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Right sidebar -->
@@ -365,11 +332,11 @@ if (empty($_SESSION['id'])) {
         });
     </script>
     <script type="text/javascript">
-    $(function(){
-        $("#ck").addClass('menu-top-active');
-    });
-</script>
-<script>
+        $(function() {
+            $("#ck").addClass('menu-top-active');
+        });
+    </script>
+    <script>
         ! function(window, document, $) {
             "use strict";
             $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
