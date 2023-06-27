@@ -17,7 +17,7 @@
                         <!--End Logo icon -->
                         <!-- Logo text --><span>
                             <!-- dark Logo text -->
-                            <img src="assets/images/text_mnm.png" alt="homepage" class="dark-logo" />
+                            <img src="assets/images/dark_text_mnm.png" alt="homepage" class="dark-logo" />
                             <!-- Light Logo text -->
                             <img src="assets/images/text_mnm.png" class="light-logo" alt="homepage" /></span>
                     </div>
@@ -41,6 +41,10 @@
                                 <input type="text" class="form-control" placeholder="Search & enter">
                             </form>
                         </li> -->
+                    </ul>
+                    <ul class="navbar-nav my-lg-0">
+                        <li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light"
+                                href="javascript:void(0)"><i class="ti-settings"></i></a></li>
                     </ul>
                 </div>
             </nav>

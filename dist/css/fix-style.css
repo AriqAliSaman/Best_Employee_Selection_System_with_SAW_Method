@@ -20730,30 +20730,30 @@
 }
 
 .skin-red-dark .topbar {
-    background: #03a9f3
+    background: #e46a76
 }
 
 .skin-red-dark .sidebar-nav ul li a.active,
 .skin-red-dark .sidebar-nav ul li a:hover {
-    color: #03a9f3
+    color: #e46a76
 }
 
 .skin-red-dark .sidebar-nav ul li a.active i,
 .skin-red-dark .sidebar-nav ul li a:hover i {
-    color: #03a9f3
+    color: #e46a76
 }
 
 .skin-red-dark .sidebar-nav>ul>li.active>a {
-    color: #03a9f3;
-    border-left: 3px solid #03a9f3
+    color: #e46a76;
+    border-left: 3px solid #e46a76
 }
 
 .skin-red-dark .sidebar-nav>ul>li.active>a i {
-    color: #03a9f3
+    color: #e46a76
 }
 
 .skin-red-dark .page-titles .breadcrumb .breadcrumb-item.active {
-    color: #03a9f3
+    color: #e46a76
 }
 
 .skin-red-dark .topbar .top-navbar .navbar-header {
@@ -20909,7 +20909,7 @@
     --purple: #ab8ce4;
     --pink: #e83e8c;
     --red: #e46a76;
-    --orange: #03a9f3;
+    --orange: #faa209;
     --yellow: #fec107;
     --green: #00c292;
     --teal: #20c997;
@@ -20922,7 +20922,7 @@
     --purple: #ab8ce4;
     --pink: #e83e8c;
     --red: #e46a76;
-    --orange: #03a9f3;
+    --orange: #faa209;
     --yellow: #fec107;
     --green: #00c292;
     --teal: #20c997;
@@ -21078,7 +21078,7 @@ sup {
 }
 
 a {
-    color: #03a9f3;
+    color: #e46a76;
     text-decoration: none;
     background-color: transparent
 }
@@ -46428,7 +46428,7 @@ html {
 }
 
 a {
-    color: #03a9f3
+    color: #e46a76
 }
 
 a:focus,
@@ -47589,7 +47589,7 @@ ul#themecolors li a.working:before {
 }
 
 .red-theme {
-    background: #03a9f3
+    background: #e46a76
 }
 
 .blue-theme {
@@ -47648,9 +47648,9 @@ ul#themecolors li a.working:before {
 
 .red-dark-theme {
     background: #343a40;
-    background: -moz-linear-gradient(left, #343a40 0, #343a40 23%, #03a9f3 23%, #03a9f3 99%);
-    background: -webkit-linear-gradient(left, #343a40 0, #343a40 23%, #03a9f3 23%, #03a9f3 99%);
-    background: linear-gradient(to right, #343a40 0, #343a40 23%, #03a9f3 23%, #03a9f3 99%)
+    background: -moz-linear-gradient(left, #343a40 0, #343a40 23%, #e46a76 23%, #e46a76 99%);
+    background: -webkit-linear-gradient(left, #343a40 0, #343a40 23%, #e46a76 23%, #e46a76 99%);
+    background: linear-gradient(to right, #343a40 0, #343a40 23%, #e46a76 23%, #e46a76 99%)
 }
 
 .chatonline img {

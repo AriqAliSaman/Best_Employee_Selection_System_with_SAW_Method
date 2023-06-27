@@ -8,7 +8,7 @@
 	}
 	echo $ids = implode(',', $ids);
 	
-	if($db->insert('hasil_tpa',"'','$id_calon_kr',$ids")->count() == 1){
+	if($db->insert('hasil_tpa',"'','$id_calon_kr',$ids,'$periode_awal','$periode_akhir'")->count() == 1){
 		header('location:data_penilaian.php?success_create=1');
 	} else {
 		header('location:data_penilaian.php?success_create=0');

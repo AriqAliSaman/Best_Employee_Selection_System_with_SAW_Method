@@ -29,8 +29,8 @@
             $image_file = K_PATH_IMAGES.'logo_mnm.jpg';
             $this->Image($image_file, 17, 4, 25, 25, 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
             $html = '<strong><font size="18">PT MAHAKARYA NUANSA MANDIRI</font></strong><br/><br/>
-            Gedung Menara 165, Jl. TB. Simatupang Kav.1 Lantai 4, Cilandak Timur, Jakarta Selatan 12560
-            <br/>
+            Gedung Menara 165, Jl. TB. Simatupang Kav.1 Lantai 4, Cilandak Timur, 
+            <br/> Jakarta Selatan 12560
             ';
             $this->writeHTMLCell(
                 $w=0,
@@ -85,7 +85,7 @@
              if($this->isLastPage) { 
                 $tgl = date("d F Y");
                 // $this->SetY(-55);
-                $html = '<font size="10">Jambi, '.$tgl.' <br/><br/> <br/><br/>
+                $html = '<font size="10">Jakarta, '.$tgl.' <br/><br/> <br/><br/>
                 '.$_SESSION['nama'].'<font>
                 <br/>';
                 $this->writeHTMLCell(

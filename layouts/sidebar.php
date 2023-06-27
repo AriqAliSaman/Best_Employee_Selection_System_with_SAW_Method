@@ -34,7 +34,7 @@
                 </ul>
             </li>
             <li>
-                <a href="data_penilaian.php" id="pk" aria-expanded="false">
+                <a href="data_penilaian.php" class="pk" id="pk" aria-expanded="false">
                     <i class="icon-note"></i><span class="hide-menu">Penilaian Karyawan</span>
                 </a>
             </li>

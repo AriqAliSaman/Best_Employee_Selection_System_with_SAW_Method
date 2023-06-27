@@ -23,7 +23,7 @@ if (empty($_SESSION['id'])) {
     <link rel="stylesheet" type="text/css" href="assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
     <!-- Custom CSS -->
-    <link href="dist/css/all-style.css" rel="stylesheet">
+    <link href="dist/css/fix-style.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -148,29 +148,7 @@ if (empty($_SESSION['id'])) {
                 <!-- ============================================================== -->
                 <!-- .right-sidebar -->
                 <div class="right-sidebar">
-                    <div class="slimscrollright">
-                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span>
-                        </div>
-                        <div class="r-panel-body">
-                            <ul id="themecolors" class="m-t-20">
-                                <li><b>With Light sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-default" class="default-theme working">1</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-green" class="green-theme">2</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-red" class="red-theme">3</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-blue" class="blue-theme">4</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-purple" class="purple-theme">5</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-megna" class="megna-theme">6</a></li>
-                                <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-default-dark" class="default-dark-theme ">7</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-green-dark" class="green-dark-theme">8</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-red-dark" class="red-dark-theme">9</a>
-                                </li>
-                                <li><a href="javascript:void(0)" data-skin="skin-blue-dark" class="blue-dark-theme">10</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-purple-dark" class="purple-dark-theme">11</a></li>
-                                <li><a href="javascript:void(0)" data-skin="skin-megna-dark" class="megna-dark-theme ">12</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <?php include 'layouts/custom_style.php' ?>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Right sidebar -->
@@ -269,75 +247,28 @@ if (empty($_SESSION['id'])) {
         }
         // Alert Berhasil Ubah Data
 
-        // ! Style 1 SweetAlert
-        // let success_delete_param = "<?= $_GET['success_delete']; ?>";
-        // if (success_delete_param == '1') {
-        //     Swal.fire(
-        //         'Berhasil',
-        //         'Data berhasil dihapus',
-        //         'success'
-        //     ).then((result) => {
-        //         window.history.replaceState(null, '', window.location.pathname);
-        //     });
-        // } else if (success_delete_param == '0') {
-        //     Swal.fire(
-        //         'Gagal',
-        //         'Data gagal dihapus',
-        //         'error'
-        //     ).then((result) => {
-        //         window.history.replaceState(null, '', window.location.pathname);
-        //     });
-        // }
+        // Alert Berhasil Hapus Data
+        let success_delete_param = "<?= $_GET['success_delete']; ?>";
+        if (success_delete_param == '1') {
+            Swal.fire(
+                'Berhasil!',
+                'Data berhasil dihapus',
+                'success'
+            ).then((result) => {
+                window.history.replaceState(null, '', window.location.pathname);
+            });
+        } else if (success_delete_param == '0') {
+            Swal.fire(
+                'Gagal!',
+                'Data gagal dihapus',
+                'error'
+            ).then((result) => {
+                window.history.replaceState(null, '', window.location.pathname);
+            });
+        }
+        // Alert Berhasil Hapus Data
 
-        // //Confirm Message
-        // $("table tbody").on('click', '.hapus', function(e) {
-        //     let id = $(this).data("id");
-        //     Swal.fire({
-        //         title: 'Hapus data ini?',
-        //         type: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: "#00C295",
-        //         confirmButtonText: "Hapus",
-        //         closeOnConfirm: false,
-        //         cancelButtonColor: "#DD6B55",
-        //         cancelButtonText: "Batal"
-        //     }).then((result) => {
-        //         if (result.value) {
-        //             window.location.href = "delete_karyawan.php?id=" + id;
-        //             // $.ajax({
-        //             //     url: "delete_admin.php",
-        //             //     type: 'DELETE',
-        //             //     data: {
-        //             //         "id": id
-        //             //     },
-        //             //     success: function(response) {
-        //             //         console.log(response);
-        //             //         if (response.status == 'success') {
-        //             //             Swal.fire(
-        //             //                 'Berhasil!',
-        //             //                 'Data berhasil dihapus',
-        //             //                 'success'
-        //             //             ).then((result) => {
-        //             //                 location.href = "delete_admin.php",
-        //             //                     location.reload();
-        //             //             })
-        //             //         } else {
-        //             //             Swal.fire(
-        //             //                 'Gagal!',
-        //             //                 'Data gagal dihapus',
-        //             //                 'error'
-        //             //             ).then((result) => {
-        //             //                 location.reload();
-        //             //             })
-        //             //         }
-        //             //     }
-        //             // });
-        //         }
-        //     })
-        // });
-        // ! Style 1 SweetAlert
-
-        // ! Style 2 SweetAlert
+        //! Alert Confirm
         ! function($) {
 
             var SweetAlert = function() {};
@@ -357,13 +288,7 @@ if (empty($_SESSION['id'])) {
                         cancelButtonText: "Batal"
                     }).then((result) => {
                         if (result.value) {
-                            Swal.fire(
-                                'Berhasil!',
-                                'Data berhasil dihapus',
-                                'success'
-                            ).then((result) => {
-                                location.href = 'delete_subkriteria.php?id= ' + id;
-                            })
+                            location.href = 'delete_subkriteria.php?id= ' + id;
                         }
                     })
                 });
@@ -376,7 +301,7 @@ if (empty($_SESSION['id'])) {
             "use strict";
             $.SweetAlert.init()
         }(window.jQuery);
-        // ! Style 2 SweetAlert
+        //! Alert Confirm
 
         // <!-- ======================================================= -->
         $(function() {
@@ -426,31 +351,6 @@ if (empty($_SESSION['id'])) {
                 ]
             });
             $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel').addClass('btn btn-primary mr-1');
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $("#AD").addClass('menu-top-active');
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $('#example1').dataTable();
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $("#ds").addClass('menu-top-active');
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $('#example1').dataTable();
-        });
-    </script>
-    <script type="text/javascript">
-        $(function() {
-            $("#sk").addClass('menu-top-active');
         });
     </script>
     <script type="text/javascript">
