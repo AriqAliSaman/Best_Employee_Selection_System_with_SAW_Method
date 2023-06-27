@@ -1,5 +1,3 @@
-
-        <footer class="footer">
-            © 2023 Projek KKP
-        </footer>
-       
+<footer class="footer">
+    © 2023 Project KKP
+</footer>
