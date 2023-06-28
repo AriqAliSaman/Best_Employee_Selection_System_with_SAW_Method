@@ -26,10 +26,12 @@ if (empty($_SESSION['id'])) {
 
     // $stmt = $conn->prepare("SELECT * FROM hasil_tpa WHERE periode='$explode[0]'");
     $stmt = $conn->prepare("SELECT karyawan.id_calon_kr, karyawan.nama, hasil_tpa.* FROM karyawan JOIN hasil_tpa ON karyawan.id_calon_kr = hasil_tpa.id_calon_kr WHERE periode='$explode[0]'");
+    $stmts = $conn->prepare("SELECT karyawan.id_calon_kr, karyawan.nama, hasil_tpa.* FROM karyawan JOIN hasil_tpa ON karyawan.id_calon_kr = hasil_tpa.id_calon_kr");
     $stmt->execute();
 
     // set the resulting array to associative
     $result = $stmt->fetchAll();
+    $results = $stmts->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -161,10 +163,11 @@ if (empty($_SESSION['id'])) {
                                         <tbody>
                                             <?php $no = 1;
                                             foreach ($db->select('karyawan.id_calon_kr,karyawan.nama,hasil_tpa.*', 'karyawan,hasil_tpa')->where('karyawan.id_calon_kr=hasil_tpa.id_calon_kr')->get() as $data) : 
-                                            // $id = $data[0];
-                                            // $periode = $data[8];
-                                            // $berdasarkan = 
-                                            
+                                            // if(isset($_POST['filter'])){
+                                            //     $result;
+                                            // } else {
+                                            //     $results;
+                                            // }
                                             ?>
                                                 <tr>
                                                     <td class="text-center"><?= $no; ?></td>
@@ -179,7 +182,8 @@ if (empty($_SESSION['id'])) {
                                                     </td>
                                                 </tr>
                                             <?php $no++;
-                                            endforeach; ?>
+                                            endforeach; 
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
