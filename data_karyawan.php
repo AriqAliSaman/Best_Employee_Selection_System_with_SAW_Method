@@ -123,7 +123,7 @@ function hitung_lama_bergabung($tgl_lahir)
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <div><a href="input_karyawan.php" id="ck" class="btn btn-info"><i class="ti-plus"></i> Tambah Data</a></div>
-                                    <table id="myTable" class="table table-bordered table-striped" style="width:max-content;">
+                                    <table id="myTable" class="table table-bordered table-striped nowrap" width="100%;">
                                         <thead>
                                             <tr>
                                                 <th>NIK</th>
@@ -334,7 +334,10 @@ function hitung_lama_bergabung($tgl_lahir)
 
         // <!-- ======================================================= -->
         $(function() {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                scrollX: true,
+                autoFill: true
+            });
             var table = $('#example').DataTable({
                 "columnDefs": [{
                     "visible": false,
@@ -384,7 +387,9 @@ function hitung_lama_bergabung($tgl_lahir)
     </script>
     <script type="text/javascript">
         $(function() {
-            $('#example1').dataTable();
+            $('#example1').dataTable({
+                
+            });
         });
     </script>
 </body>

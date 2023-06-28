@@ -1,7 +1,7 @@
 <?php
 	include 'db/db_config.php';
 	extract($_POST);
-	//print_r($_POST);
+	// print_r($_POST);
 	$n = 0;
 	foreach ($db->select('kriteria','kriteria')->get() as $c) {
 		 $k[$n] = $c['kriteria'];
