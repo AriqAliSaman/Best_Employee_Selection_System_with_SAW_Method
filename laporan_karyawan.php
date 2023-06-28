@@ -61,6 +61,9 @@ class MYPDF extends TCPDF
                 <tr>
                 <td align="center" style="font-size: 15px;">Laporan Data Karyawan</td>
                 </tr>
+                <tr>
+                <td align="center" style="font-size: 15px;">2023-06-22 ~ 2023-06-29</td>
+                </tr>
                 </table>
                 <table>
                 <tr>
@@ -157,7 +160,7 @@ $pdf->AddPage('L');
 
 $htmlTable =
     '
-<table border="1" cellpadding="4" >
+<br><br><br><table border="1" cellpadding="4">
 <thead>
         <tr>
             <th style="width:12%">NIK</th>
