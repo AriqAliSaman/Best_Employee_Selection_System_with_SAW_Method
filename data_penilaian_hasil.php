@@ -1,31 +1,44 @@
 <?php
-session_start();
-error_reporting(0);
-if (empty($_SESSION['id'])) {
-    header('location:login.php?error_login=1');
-}
-function hitung_lama_bergabung($tgl_lahir)
-{
-    $today = date('Y-m-d');
-    $now = time();
-    list($thn, $bln, $tgl) = explode('-', $tgl_lahir);
-    $time_lahir = mktime(0, 0, 0, $bln, $tgl, $thn);
-
-    $selisih = $now - $time_lahir;
-
-    $tahun = floor($selisih / (60 * 60 * 24 * 365));
-    $bulan = round(($selisih % (60 * 60 * 24 * 365)) / (60 * 60 * 24 * 30));
-
-    return $tahun . ' tahun ' . $bulan . ' bulan';
-}
+    session_start();
+    error_reporting(0);
+    if (empty($_SESSION['id'])) {
+        header('location:login_page.php?error_login=1');
+    }
 ?>
 
-<?php include 'db/db_config.php'; ?>
+<?php 
+    include 'db/db_config.php';
+    $host = "localhost";
+    $dbname = "projek_kkp";
+    $username = "root";
+    $password = "";
+    try {
+        $conn = new PDO("mysql:host=$host;dbname=$dbname;", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die("Could not connect to the database $dbname :" . $pe->getMessage());
+    }
+
+    extract($_POST);
+    // print_r($_POST);
+    $n = 0;
+    $periode = $_POST['periode'];
+    $explode = explode('/', $_POST['periode']);
+
+    // $stmt = $conn->prepare("SELECT * FROM hasil_tpa WHERE periode='$explode[0]'");
+    $stmt = $conn->prepare("SELECT karyawan.id_calon_kr, karyawan.nama, hasil_tpa.* FROM karyawan JOIN hasil_tpa ON karyawan.id_calon_kr = hasil_tpa.id_calon_kr WHERE periode='$explode[0]'");
+    $stmt->execute();
+
+    // set the resulting array to associative
+    $result = $stmt->fetchAll();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -34,7 +47,7 @@ function hitung_lama_bergabung($tgl_lahir)
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/logo_mnm.png">
-    <title>Data Karyawan</title>
+    <title>Penilaian Karyawan</title>
     <link rel="stylesheet" type="text/css" href="assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" type="text/css" href="assets/node_modules/datatables.net-bs4/css/responsive.dataTables.min.css">
     <!-- Custom CSS -->
@@ -90,14 +103,13 @@ function hitung_lama_bergabung($tgl_lahir)
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h4 class="text-themecolor">Data Karyawan</h4>
+                        <h4 class="text-themecolor">Penilaian Karyawan</h4>
                     </div>
                     <div class="col-md-7 align-self-center text-right">
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0)">Master Data</a></li>
-                                <li class="breadcrumb-item active">Data Karyawan</li>
+                                <li class="breadcrumb-item active">Penilaian Karyawan</li>
                             </ol>
                         </div>
                     </div>
@@ -122,41 +134,32 @@ function hitung_lama_bergabung($tgl_lahir)
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <div><a href="input_karyawan.php" id="ck" class="btn btn-info"><i class="ti-plus"></i> Tambah Data</a></div>
-                                    <table id="myTable" class="table table-bordered table-striped nowrap" width="100%;">
+                                    <div class="m-t-30"><a href="input_penilaian.php" id="pk" class="btn btn-info"><i class="ti-plus"></i> Tambah Data</a></div>
+                                    <table id="example1" class="table table-bordered table-striped nowrap" width="100%;">
                                         <thead>
                                             <tr>
-                                                <th>NIK</th>
+                                                <th class="text-center">No</th>
                                                 <th>Nama</th>
-                                                <th>Jenis Kelamin</th>
-                                                <th>Alamat</th>
-                                                <th>Telepon</th>
-                                                <th>Tempat lahir</th>
-                                                <th>Tanggal lahir</th>
-                                                <th>Pendidikan</th>
-                                                <th>Jabatan</th>
-                                                <th>Tanggal Bergabung</th>
-                                                <th>Lama Bergabung</th>
+                                                <?php foreach ($db->select('kriteria', 'kriteria')->get() as $kr) : ?>
+                                                    <th><?= $kr['kriteria'] ?></th>
+                                                <?php endforeach ?>
+                                                <th class="text-center">Periode</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php $no = 1;
-                                            foreach ($db->select('*', 'karyawan')->get() as $data) : ?>
+                                            foreach ($result as $data) :  ?>
+                                                <!-- foreach ($db->select('karyawan.id_calon_kr,karyawan.nama,hasil_tpa.*', 'karyawan,hasil_tpa')->where('karyawan.id_calon_kr=hasil_tpa.id_calon_kr')->get() as $data) : ?> -->
                                                 <tr>
-                                                    <td><?= $data['NIK']; ?></td>
+                                                    <td class="text-center"><?= $no; ?></td>
                                                     <td><?= $data['nama'] ?></td>
-                                                    <td><?= $data['jeniskelamin'] ?></td>
-                                                    <td><?= $data['alamat'] ?></td>
-                                                    <td><?= $data['telepon'] ?></td>
-                                                    <td><?= $data['TempatLahir'] ?></td>
-                                                    <td><?= $data['ttl'] ?></td>
-                                                    <td><?= $data['PendidikanTerakhir'] ?></td>
-                                                    <td><?= $data['Jabatan'] ?></td>
-                                                    <td><?= $data['TglBergabung'] ?></td>
-                                                    <td><?php echo hitung_lama_bergabung($data['TglBergabung']) ?>
-                                                    <td>
-                                                        <a class="btn btn-warning" href="edit_karyawan.php?id=<?php echo $data[0] ?>">Ubah</a>
+                                                    <?php foreach ($db->select('kriteria', 'kriteria')->get() as $k) : ?>
+                                                        <td><?= $db->getnamesubkriteria($data[$k['kriteria']]) ?> (Nilai = <?= $db->getnilaisubkriteria($data[$k['kriteria']]) ?>)</td>
+                                                    <?php endforeach ?>
+                                                    <td><?= $data['periode'] ?></td>
+                                                    <td style="width: 138px;">
+                                                        <a class="btn btn-warning" href="edit_penilaian.php?id=<?php echo $data[0] ?>&periode=<?php echo $data['8'] ?>">Ubah</a>
                                                         <a class="btn btn-danger img-fluid model_img text-white hapus" data-id="<?php echo $data[0] ?>">Hapus</a>
                                                     </td>
                                                 </tr>
@@ -164,23 +167,17 @@ function hitung_lama_bergabung($tgl_lahir)
                                             endforeach; ?>
                                         </tbody>
                                     </table>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
                 <div class="right-sidebar">
                     <?php include 'layouts/custom_style.php' ?>
                 </div>
                 <!-- ============================================================== -->
-                <!-- End Right sidebar -->
+                <!-- End PAge Content -->
                 <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
@@ -232,6 +229,9 @@ function hitung_lama_bergabung($tgl_lahir)
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+    <script src="assets/daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <!-- end - This is for export functionality only -->
     <script>
         // Alert Berhasil Tambah Data
@@ -317,7 +317,7 @@ function hitung_lama_bergabung($tgl_lahir)
                         cancelButtonText: "Batal"
                     }).then((result) => {
                         if (result.value) {
-                            location.href = 'delete_karyawan.php?id= ' + id;
+                            location.href = 'delete_penilaian.php?id= ' + id;
                         }
                     })
                 });
@@ -333,11 +333,85 @@ function hitung_lama_bergabung($tgl_lahir)
         //! Alert Confirm
 
         // <!-- ======================================================= -->
-        $(function() {
-            $('#myTable').DataTable({
-                scrollX: true,
-                autoFill: true
+        var startDate;
+        var endDate;
+        $(document).ready(function() {
+            $('#periode').daterangepicker({
+                    showDropdowns: true,
+                    startDate: moment(),
+                    endDate: moment(),
+                    locale: {
+                        "format": "YYYY-MM-DD",
+                        "separator": "/",
+                        "applyLabel": "Apply",
+                        "cancelLabel": "Cancel",
+                        "fromLabel": "From",
+                        "toLabel": "To",
+                        "customRangeLabel": "Custom",
+                        "weekLabel": "W",
+                        "daysOfWeek": [
+                            "Su",
+                            "Mo",
+                            "Tu",
+                            "We",
+                            "Th",
+                            "Fr",
+                            "Sa"
+                        ],
+                        monthNames: [
+                            "January",
+                            "February",
+                            "March",
+                            "April",
+                            "May",
+                            "June",
+                            "July",
+                            "August",
+                            "September",
+                            "October",
+                            "November",
+                            "December"
+                        ],
+                        firstDay: 1
+                    },
+                },
+                function(start, end) {
+                    // console.log(start.format('DD MMMM YYYY') + ' - ' + end.format(
+                    //     'DD MMMM YYYY'));
+                    $('#periode').html(start.format('DD MMMM YYYY') + ' - ' + end.format('DD MMMM YYYY'));
+                    startDate = start;
+                    endDate = end;
+                    FilterPeriode(
+                        start.format('YYYY-MM-DD'),
+                        end.format('YYYY-MM-DD'),
+                    );
+                }
+            );
+            $('#periode').html(moment().format('DD MMMM YYYY') + ' - ' + moment()
+                .format('DD MMMM YYYY'));
+
+            $('#saveBtn').click(function() {
+                //console.log(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format('DD MMMM YYYY'));
+                $('#tampil').html(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format('DD MMMM YYYY'));
             });
+
+            function FilterPeriode(startDate, endDate) {
+                var DateRange = startDate + '-' + endDate;
+
+                $.ajax({
+                    type: "GET",
+                    url: "filter_periode.php",
+                    data: {
+                        startDate: startDate,
+                        endDate: endDate
+                    },
+                });
+                console.log(startDate, endDate);
+            }
+        });
+
+        $(function() {
+            $('#myTable').DataTable();
             var table = $('#example').DataTable({
                 "columnDefs": [{
                     "visible": false,
@@ -357,7 +431,7 @@ function hitung_lama_bergabung($tgl_lahir)
                         page: 'current'
                     }).data().each(function(group, i) {
                         if (last !== group) {
-                            $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+                            $(rows).eq(i).before('<tr class="group"> <td colspan = "5" > ' + group + ' < /td> </tr>');
                             last = group;
                         }
                     });
@@ -388,9 +462,26 @@ function hitung_lama_bergabung($tgl_lahir)
     <script type="text/javascript">
         $(function() {
             $('#example1').dataTable({
-                
+                scrollX: true,
+                autoFill: true
             });
         });
+
+        $(function() {
+            $("#sidebarnav >li >a.pk").addClass('active');
+        });
+
+        function filter() {
+            Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: 'Filter Periode Berhasil!',
+                showConfirmButton: true,
+                timer: 3000
+            }).then((result) => {
+                $("#filter_periode").show();
+            })
+        }
     </script>
 </body>
 

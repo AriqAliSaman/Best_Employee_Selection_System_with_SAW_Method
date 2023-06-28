@@ -175,4 +175,3 @@
 		
 	}
 	$db = new database();
-?>

@@ -5,12 +5,39 @@ if (empty($_SESSION['id'])) {
     header('location:login_page.php?error_login=1');
 }
 ?>
-<?php include 'db/db_config.php'; ?>
+<?php
+    include 'db/db_config.php'; 
+    $host = "localhost";
+    $dbname = "projek_kkp";
+    $username = "root";
+    $password = "";
+    try {
+        $conn = new PDO("mysql:host=$host;dbname=$dbname;", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die("Could not connect to the database $dbname :" . $pe->getMessage());
+    }
+
+    extract($_POST);
+    // print_r($_POST);
+    $n = 0;
+    $periode = $_POST['periode'];
+    $explode = explode('/', $_POST['periode']);
+
+    // $stmt = $conn->prepare("SELECT * FROM hasil_tpa WHERE periode='$explode[0]'");
+    $stmt = $conn->prepare("SELECT karyawan.id_calon_kr, karyawan.nama, hasil_tpa.* FROM karyawan JOIN hasil_tpa ON karyawan.id_calon_kr = hasil_tpa.id_calon_kr WHERE periode='$explode[0]'");
+    $stmt->execute();
+
+    // set the resulting array to associative
+    $result = $stmt->fetchAll();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
+    <link rel="stylesheet" type="text/css" href="assets/daterangepicker/daterangepicker.css" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -106,8 +133,20 @@ if (empty($_SESSION['id'])) {
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <div><a href="input_penilaian.php" id="pk" class="btn btn-info"><i class="ti-plus"></i> Tambah Data</a></div>
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <!-- <form method="post" action="data_penilaian_hasil.php" target="_blank"> -->
+                                    <form method="post" action="data_penilaian_hasil.php" target="_blank">
+                                        <div class="row col-md-12">
+                                            <div class="col-md-6">
+                                                <label for="nama"><b>Periode</b></label>
+                                                <input autocomplete="off" id="periode" type="text" class="form-control" name="periode" value="" placeholder="Input Date" required />
+                                            </div>
+                                            <div class="col-md-4 m-t-30">
+                                                <button type="submit" class="btn btn-success filter">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="m-t-30"><a href="input_penilaian.php" id="pk" class="btn btn-info"><i class="ti-plus"></i> Tambah Data</a></div>
+                                    <table id="example1" class="table table-bordered table-striped nowrap" width="100%;">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">No</th>
@@ -115,20 +154,27 @@ if (empty($_SESSION['id'])) {
                                                 <?php foreach ($db->select('kriteria', 'kriteria')->get() as $kr) : ?>
                                                     <th><?= $kr['kriteria'] ?></th>
                                                 <?php endforeach ?>
+                                                <th class="text-center">Periode</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php $no = 1;
-                                            foreach ($db->select('karyawan.id_calon_kr,karyawan.nama,hasil_tpa.*', 'karyawan,hasil_tpa')->where('karyawan.id_calon_kr=hasil_tpa.id_calon_kr')->get() as $data) : ?>
+                                            foreach ($db->select('karyawan.id_calon_kr,karyawan.nama,hasil_tpa.*', 'karyawan,hasil_tpa')->where('karyawan.id_calon_kr=hasil_tpa.id_calon_kr')->get() as $data) : 
+                                            // $id = $data[0];
+                                            // $periode = $data[8];
+                                            // $berdasarkan = 
+                                            
+                                            ?>
                                                 <tr>
                                                     <td class="text-center"><?= $no; ?></td>
                                                     <td><?= $data['nama'] ?></td>
                                                     <?php foreach ($db->select('kriteria', 'kriteria')->get() as $k) : ?>
                                                         <td><?= $db->getnamesubkriteria($data[$k['kriteria']]) ?> (Nilai = <?= $db->getnilaisubkriteria($data[$k['kriteria']]) ?>)</td>
                                                     <?php endforeach ?>
+                                                    <td><?= $data['periode'] ?></td>
                                                     <td style="width: 138px;">
-                                                        <a class="btn btn-warning" href="edit_penilaian.php?id=<?php echo $data[0] ?>">Ubah</a>
+                                                        <a class="btn btn-warning" href="edit_penilaian.php?id=<?php echo $data['0'] ?>">Ubah</a>
                                                         <a class="btn btn-danger img-fluid model_img text-white hapus" data-id="<?php echo $data[0] ?>">Hapus</a>
                                                     </td>
                                                 </tr>
@@ -197,6 +243,9 @@ if (empty($_SESSION['id'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+    <script src="assets/daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <!-- end - This is for export functionality only -->
     <script>
         // Alert Berhasil Tambah Data
@@ -298,6 +347,80 @@ if (empty($_SESSION['id'])) {
         //! Alert Confirm
 
         // <!-- ======================================================= -->
+        var startDate;
+        var endDate;
+        $(document).ready(function() {
+            $('#periode').daterangepicker({
+                    showDropdowns: true,
+                    startDate: moment(),
+                    endDate: moment(),
+                    locale: {
+                        "format": "YYYY-MM-DD",
+                        "separator": " / ",
+                        "applyLabel": "Apply",
+                        "cancelLabel": "Cancel",
+                        "fromLabel": "From",
+                        "toLabel": "To",
+                        "customRangeLabel": "Custom",
+                        "weekLabel": "W",
+                        "daysOfWeek": [
+                            "Su",
+                            "Mo",
+                            "Tu",
+                            "We",
+                            "Th",
+                            "Fr",
+                            "Sa"
+                        ],
+                        monthNames: [
+                            "January",
+                            "February",
+                            "March",
+                            "April",
+                            "May",
+                            "June",
+                            "July",
+                            "August",
+                            "September",
+                            "October",
+                            "November",
+                            "December"
+                        ],
+                        firstDay: 1
+                    },
+                },
+                function(start, end) {
+                    // console.log(start.format('DD MMMM YYYY') + ' - ' + end.format(
+                    //     'DD MMMM YYYY'));
+                    $('#periode').html(start.format('DD MMMM YYYY') + ' - ' + end.format('DD MMMM YYYY'));
+                    startDate = start;
+                    endDate = end;
+                    FilterPeriode(
+                        start.format('YYYY-MM-DD'),
+                        end.format('YYYY-MM-DD'),
+                    );
+                }
+            );
+            $('#periode').html(moment().format('DD MMMM YYYY') + ' - ' + moment()
+                .format('DD MMMM YYYY'));
+
+            $('#saveBtn').click(function() {
+                //console.log(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format('DD MMMM YYYY'));
+                $('#tampil').html(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format('DD MMMM YYYY'));
+            });
+
+            function FilterPeriode(startDate, endDate) {
+                var DateRange = startDate + '-' + endDate;
+
+                $.ajax({
+                    type: "GET",
+                    url: "data_penilaian_hasil.php",
+                    data: {startDate:startDate, endDate:endDate},
+                });
+                console.log(startDate, endDate);
+            }
+        });
+
         $(function() {
             $('#myTable').DataTable();
             var table = $('#example').DataTable({
@@ -319,7 +442,7 @@ if (empty($_SESSION['id'])) {
                         page: 'current'
                     }).data().each(function(group, i) {
                         if (last !== group) {
-                            $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+                            $(rows).eq(i).before('<tr class="group"> <td colspan = "5" > ' + group + ' < /td> </tr>');
                             last = group;
                         }
                     });
@@ -349,8 +472,23 @@ if (empty($_SESSION['id'])) {
     </script>
     <script type="text/javascript">
         $(function() {
-            $('#example1').dataTable();
+            $('#example1').dataTable({
+                scrollX: true,
+                autoFill: true
+            });
         });
+
+        function filter() {
+            Swal.fire({
+                position: 'center',
+                type: 'success',
+                title: 'Filter Periode Berhasil!',
+                showConfirmButton: true,
+                timer: 3000
+            }).then((result) => {
+                $("#filter_periode").show();
+            })
+        }
     </script>
 </body>
 

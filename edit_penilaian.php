@@ -103,30 +103,34 @@ if (empty($_SESSION['id'])) {
                                             <?= $_GET['error_msg']; ?>
                                         </div>
                                     <?php endif ?>
-                                    <?php foreach ($db->select('hasil_tpa.*,karyawan.id_calon_kr,karyawan.nama', 'hasil_tpa,karyawan')->where('hasil_tpa.id_calon_kr=karyawan.id_calon_kr and hasil_tpa.id_calon_kr=' . $_GET['id'])->get() as $data) : ?>
-                                        <input type="hidden" name="id" value="<?= $data['id_calon_kr'] ?>">
-                                        <div class="form-group col-md-12">
-                                            <label for="nama">Nama</label>
-                                            <input type="text" class="form-control" id="nama" name="nama" value="<?= $data['nama'] ?>" readonly>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <?php foreach ($db->select('id_kriteria,kriteria', 'kriteria')->get() as $r) : ?>
-                                                <div class="form-group col-md-4">
-                                                    <label><?= $r['kriteria'] ?></label>
-                                                    <select required class="form-control" name="kriteria[]">
-                                                        <?php foreach ($db->select('*', 'sub_kriteria')->where('id_kriteria = ' . $r['id_kriteria'] . '')->get() as $val) : ?>
-                                                            <option value="<?= $val['id_subkriteria'] ?>" 
-                                                                <?php if ($db->getnamesubkriteria($data[$r['kriteria']]) == $val['subkriteria']) {
-                                                                echo ' selected="selected"';} ?>><?= $val['subkriteria'] ?> (Nilai = <?= $val['nilai'] ?>)
-                                                            </option>
-                                                        <?php endforeach ?>
-                                                    </select>
-                                                </div>
-                                            <?php endforeach ?>
+                                    <diV class="col-md-12">
+                                        <?php foreach ($db->select('hasil_tpa.*,karyawan.id_calon_kr,karyawan.nama', 'hasil_tpa,karyawan')->where('hasil_tpa.id_calon_kr=karyawan.id_calon_kr and hasil_tpa.id_calon_kr=' . $_GET['id'])->get() as $data) : ?>
+                                            <input type="hidden" name="id" value="<?= $data['id_calon_kr'] ?>">
+                                            <div class="form-group col-md-12">
+                                                <label for="nama">Periode</label>
+                                                <input autocomplete="off" id="periode" type="text" class="form-control" name="periode" value="<?= $data['periode'] ?>" placeholder="Input Date" readonly />
+                                                <label for="nama">Nama</label>
+                                                <input type="text" class="form-control" id="nama" name="nama" value="<?= $data['nama'] ?>" readonly>
+                                            </div>
+                                            <div class=""></div>
+                                    </diV>
+                                    <div class="col-md-12">
+                                        <?php foreach ($db->select('id_kriteria,kriteria', 'kriteria')->get() as $r) : ?>
+                                            <div class="form-group col-md-5">
+                                                <label><?= $r['kriteria'] ?></label>
+                                                <select required class="form-control" name="kriteria[]">
+                                                    <?php foreach ($db->select('*', 'sub_kriteria')->where('id_kriteria = ' . $r['id_kriteria'] . '')->get() as $val) : ?>
+                                                        <option value="<?= $val['id_subkriteria'] ?>" <?php if ($db->getnamesubkriteria($data[$r['kriteria']]) == $val['subkriteria']) {
+                                                            echo ' selected="selected"';} ?>><?= $val['subkriteria'] ?> (Nilai = <?= $val['nilai'] ?>)
+                                                        </option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div>
                                         <?php endforeach ?>
-                                        </div>
-                                        <button type="submit" class="btn btn-success mr-2">Submit</button>
-                                        <a href="data_penilaian.php" class="btn btn-danger">Cancel</a>
+                                    <?php endforeach ?>
+                                    </div>
+                                    <button type="submit" class="btn btn-success mr-2">Submit</button>
+                                    <a href="data_penilaian.php" class="btn btn-danger">Cancel</a>
                                 </form>
                             </div>
                         </div>
@@ -204,10 +208,59 @@ if (empty($_SESSION['id'])) {
             $("#task2").perfectScrollbar();
             $("#task3").perfectScrollbar();
         });
+
+        $(function() {
+            $('#myTable').DataTable();
+            var table = $('#example').DataTable({
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": 2
+                }],
+                "order": [
+                    [2, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+                    api.column(2, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before('<tr class="group"> <td colspan = "5" > ' + group + ' < /td> </tr>');
+                            last = group;
+                        }
+                    });
+                }
+            });
+            // Order by the grouping
+            $('#example tbody').on('click', 'tr.group', function() {
+                var currentOrder = table.order()[0];
+                if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
+                    table.order([2, 'desc']).draw();
+                } else {
+                    table.order([2, 'asc']).draw();
+                }
+            });
+            // responsive table
+            $('#config-table').DataTable({
+                responsive: true
+            });
+            $('#example23').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+            $('.buttons-copy, .buttons-csv, .buttons-print, .buttons-pdf, .buttons-excel').addClass('btn btn-primary mr-1');
+        });
     </script>
     <script type="text/javascript">
         $(function() {
-            $("#pk").addClass('menu-top-active');
+            $("#sidebarnav >li >a.pk").addClass('active');
         });
     </script>
 </body>

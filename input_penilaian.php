@@ -11,6 +11,7 @@ if (empty($_SESSION['id'])) {
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -103,32 +104,36 @@ if (empty($_SESSION['id'])) {
                                             <?= $_GET['error_msg']; ?>
                                         </div>
                                     <?php endif ?>
-                                    <div class="row col-md-12">
-                                        <div class="form-group col-md-6">
-                                            <label for="nama">Periode Awal</label>
-                                            <input id="periode_awal" type="date" class="form-control" name="periode_awal" placeholder="Periode Awal" />
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="nama">Periode Akhir</label>
-                                            <input id="periode_akhir" type="date" class="form-control" name="periode_akhir" placeholder="Periode Akhir" />
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group col-md-12">
-                                        <div class="alert alert-info">
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-5">
+                                            <label for="nama">Periode</label>
+                                            <input autocomplete="off" id="periode" type="text" class="form-control" name="periode" value="" placeholder="Input Date" required />
+                                            <!-- <div class="form-group col-md-6">
+                                                <label for="nama">Periode Awal</label>
+                                                <input id="periode_awal" type="date" class="form-control" name="periode_awal" placeholder="Periode Awal" />
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="nama">Periode Akhir</label>
+                                                <input id="periode_akhir" type="date" class="form-control" name="periode_akhir" placeholder="Periode Akhir" />
+                                            </div> -->
+                                            <!-- <div class="alert alert-info">
                                             <i class="ti-info-alt"></i> Nama Yang Ditampilkan adalah nama karyawan yang belum dinilai...
+                                        </div> -->
+                                            <div class="m-t-20">
+                                                <label for="nama">Nama Karyawan</label>
+                                                <select required class="form-control" name="id_calon_kr">
+                                                    <?php foreach ($db->select('*', 'karyawan')->get() as $val) : ?>
+                                                        <option value="<?= $val['id_calon_kr'] ?>"><?= $val['nama'] ?></option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <label for="nama">Nama Karyawan</label>
-                                        <select required class="form-control" name="id_calon_kr">
-                                            <?php foreach ($db->select('*', 'karyawan')->where('id_calon_kr not in (select id_calon_kr from hasil_tpa)')->get() as $val) : ?>
-                                                <option value="<?= $val['id_calon_kr'] ?>"><?= $val['nama'] ?></option>
-                                            <?php endforeach ?>
-                                        </select>
                                     </div>
 
                                     <div class="col-md-12">
                                         <?php foreach ($db->select('id_kriteria,kriteria', 'kriteria')->get() as $r) : ?>
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-5">
                                                 <label><?= $r['kriteria'] ?></label>
                                                 <!-- <input type="number" name="place[]" class="form-control"> -->
                                                 <select required class="form-control" name="place[]">
@@ -209,8 +214,11 @@ if (empty($_SESSION['id'])) {
     <script src="dist/js/fastclick.js"></script>
     <script src="dist/js/web-ticker.js"></script>
     <!-- DateRangePicker -->
-    <!-- <link href="assets/daterangepicker/daterangepicker-bs3.css" rel="stylesheet"></link>
-    <script src="assets/daterangepicker/daterangepicker.js"></script> -->
+    <link href="assets/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
+    </link>
+    <script src="assets/daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script type="text/javascript">
         $(function() {
             $('#cc-table').DataTable({
@@ -222,7 +230,7 @@ if (empty($_SESSION['id'])) {
             $("#task3").perfectScrollbar();
         });
     </script>
-    <!-- <script>
+    <script>
         var startDate;
         var endDate;
         $(document).ready(function() {
@@ -230,14 +238,51 @@ if (empty($_SESSION['id'])) {
                     showDropdowns: true,
                     startDate: moment(),
                     endDate: moment(),
+                    locale: {
+                        "format": "YYYY-MM-DD",
+                        "separator": " / ",
+                        "applyLabel": "Apply",
+                        "cancelLabel": "Cancel",
+                        "fromLabel": "From",
+                        "toLabel": "To",
+                        "customRangeLabel": "Custom",
+                        "weekLabel": "W",
+                        "daysOfWeek": [
+                            "Su",
+                            "Mo",
+                            "Tu",
+                            "We",
+                            "Th",
+                            "Fr",
+                            "Sa"
+                        ],
+                        monthNames: [
+                            "January",
+                            "February",
+                            "March",
+                            "April",
+                            "May",
+                            "June",
+                            "July",
+                            "August",
+                            "September",
+                            "October",
+                            "November",
+                            "December"
+                        ],
+                        firstDay: 1
+                    },
                 },
                 function(start, end) {
-                    console.log("Callback has been called!");
-                    $('#periode').html(start.format('DD MMMM YYYY') + ' - ' + end.format(
-                        'DD MMMM YYYY'));
+                    // console.log(start.format('DD MMMM YYYY') + ' - ' + end.format(
+                    //     'DD MMMM YYYY'));
+                    $('#periode').html(start.format('DD MMMM YYYY') + ' - ' + end.format('DD MMMM YYYY'));
                     startDate = start;
                     endDate = end;
-
+                    FilterPeriode(
+                        start.format('YYYY-MM-DD'),
+                        end.format('YYYY-MM-DD'),
+                    );
                 }
             );
             $('#periode').html(moment().format('DD MMMM YYYY') + ' - ' + moment()
@@ -245,12 +290,21 @@ if (empty($_SESSION['id'])) {
 
             $('#saveBtn').click(function() {
                 //console.log(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format('DD MMMM YYYY'));
-                $('#tampil').html(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format(
-                    'DD MMMM YYYY'));
+                $('#tampil').html(startDate.format('DD MMMM YYYY') + ' - ' + endDate.format('DD MMMM YYYY'));
             });
 
+            function FilterPeriode(startDate, endDate) {
+                var DateRange = startDate + '-' + endDate;
+
+                $.ajax({
+                    type: "GET",
+                    url: "data_penilaian_hasil.php",
+                    data: {startDate:startDate, endDate:endDate},
+                });
+                console.log(startDate, endDate);
+            }
         });
-    </script> -->
+    </script>
     <script type="text/javascript">
         $(function() {
             $("#sidebarnav >li >a.pk").addClass('active');
